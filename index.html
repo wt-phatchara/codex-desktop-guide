@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Codex Desktop Guide</title>
+<meta name="description" content="A bilingual Thai/English beginner's guide to installing and using OpenAI's Codex inside the ChatGPT desktop app.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Taviraj:wght@400;500;600;700&family=Sarabun:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    color-scheme: light dark;
+    --paper: #F1F3EC;
+    --paper-2: #FFFFFF;
+    --ink: #1E2E28;
+    --ink-soft: #55685D;
+    --ink-faint: #8A9A8F;
+    --accent: #C97F1E;
+    --accent-soft: #EFDCBB;
+    --accent-2: #2F5548;
+    --line: #D9DECB;
+    --warn-bg: #FBEEDA;
+    --warn-line: #E7C583;
+    --shadow: 0 1px 2px rgba(30,46,40,.06), 0 8px 24px -12px rgba(30,46,40,.18);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper: #131E19;
+      --paper-2: #1B2721;
+      --ink: #ECF1E8;
+      --ink-soft: #A7B8AC;
+      --ink-faint: #6C7E72;
+      --accent: #F0AC4C;
+      --accent-soft: #3A2E17;
+      --accent-2: #86BBA6;
+      --line: #2B3A32;
+      --warn-bg: #2C2415;
+      --warn-line: #5A481F;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper: #131E19;
+    --paper-2: #1B2721;
+    --ink: #ECF1E8;
+    --ink-soft: #A7B8AC;
+    --ink-faint: #6C7E72;
+    --accent: #F0AC4C;
+    --accent-soft: #3A2E17;
+    --accent-2: #86BBA6;
+    --line: #2B3A32;
+    --warn-bg: #2C2415;
+    --warn-line: #5A481F;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Sarabun','Work Sans',sans-serif;
+    line-height:1.65;
+  }
+  :is(h1,h2,h3){
+    font-family:'Taviraj','Sarabun',serif;
+    text-wrap:balance;
+    margin:0;
+    color:var(--ink);
+  }
+  .wrap{ max-width:760px; margin:0 auto; padding:0 24px 96px; }
+  @media (max-width:560px){ .wrap{ padding:0 16px 72px; } }
+
+  /* --- language toggle plumbing --- */
+  [data-th]{ display:block; }
+  [data-en]{ display:none; }
+  body.lang-en [data-th]{ display:none; }
+  body.lang-en [data-en]{ display:block; }
+  [data-th].inline, [data-en].inline{ display:inline; }
+  body.lang-en [data-en].inline{ display:inline; }
+  span[data-th], span[data-en]{ display:inline; }
+  body.lang-en span[data-th]{ display:none; }
+  body.lang-en span[data-en]{ display:inline; }
+
+  /* --- top bar --- */
+  .topbar{
+    position:sticky; top:0; z-index:20;
+    background:color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{
+    max-width:760px; margin:0 auto; padding:14px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+  }
+  @media (max-width:560px){ .topbar-inner{ padding:12px 16px; } }
+  .brand{ display:flex; align-items:center; gap:10px; min-width:0; }
+  .brand-mark{
+    width:30px; height:30px; border-radius:8px; flex:none;
+    background:var(--accent-2); color:var(--paper-2);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:13px;
+  }
+  .brand-name{
+    font-family:'Taviraj',serif; font-weight:600; font-size:17px;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .lang-switch{
+    display:flex; border:1px solid var(--line); border-radius:999px; padding:3px;
+    background:var(--paper-2); flex:none; box-shadow:var(--shadow);
+  }
+  .lang-switch button{
+    font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:600;
+    letter-spacing:.03em; border:none; background:transparent; color:var(--ink-soft);
+    padding:6px 14px; border-radius:999px; cursor:pointer; transition:background .15s,color .15s;
+  }
+  .lang-switch button.active{ background:var(--accent-2); color:var(--paper-2); }
+  .lang-switch button:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  /* --- hero --- */
+  .hero{ padding:52px 0 8px; }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:600;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--accent-2);
+    display:flex; align-items:center; gap:8px; margin-bottom:14px;
+  }
+  .eyebrow::before{ content:""; width:18px; height:1px; background:var(--accent-2); }
+  h1{ font-size:clamp(28px,5vw,40px); font-weight:600; line-height:1.18; }
+  .lede{ margin-top:16px; font-size:17px; color:var(--ink-soft); max-width:58ch; }
+  .meta-line{
+    margin-top:22px; padding-top:18px; border-top:1px solid var(--line);
+    font-size:13px; color:var(--ink-faint); display:flex; flex-wrap:wrap; gap:6px 10px;
+  }
+
+  section{ margin-top:56px; }
+  .section-head{ display:flex; align-items:baseline; gap:12px; margin-bottom:18px; }
+  .section-num{
+    font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--ink-faint);
+    flex:none;
+  }
+  h2{ font-size:22px; font-weight:600; }
+  .section-intro{ color:var(--ink-soft); margin:10px 0 20px; max-width:62ch; }
+
+  p{ margin:0 0 14px; }
+  p:last-child{ margin-bottom:0; }
+
+  /* --- checklist --- */
+  .checklist{
+    background:var(--paper-2); border:1px solid var(--line); border-radius:14px;
+    padding:6px; box-shadow:var(--shadow); list-style:none; margin:0;
+  }
+  .checklist li{
+    display:flex; gap:12px; padding:14px 14px; border-radius:10px;
+  }
+  .checklist li + li{ border-top:1px solid var(--line); }
+  .check-mark{
+    flex:none; width:22px; height:22px; border-radius:6px; margin-top:2px;
+    border:1.5px solid var(--accent-2); color:var(--accent-2);
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:700;
+  }
+  .checklist p{ margin:0; }
+
+  /* --- steps --- */
+  .steps{ position:relative; list-style:none; margin:0; padding:0; }
+  .steps::before{
+    content:""; position:absolute; left:23px; top:8px; bottom:8px; width:1px;
+    background:var(--line);
+  }
+  .step{ position:relative; display:flex; gap:20px; padding:0 0 32px; }
+  .step:last-child{ padding-bottom:0; }
+  .step-num{
+    flex:none; position:relative; z-index:1;
+    width:47px; height:47px; border-radius:12px;
+    background:var(--accent-soft); border:1px solid var(--warn-line);
+    color:var(--accent-2);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:16px;
+  }
+  .step-body{ padding-top:6px; min-width:0; }
+  .step-title{ font-family:'Taviraj',serif; font-weight:600; font-size:18px; margin-bottom:6px; }
+  .step-text{ color:var(--ink-soft); }
+  .tip{
+    margin-top:12px; display:flex; gap:8px; align-items:flex-start;
+    background:var(--paper-2); border:1px solid var(--line); border-radius:10px;
+    padding:10px 12px; font-size:14.5px; color:var(--ink-soft);
+  }
+  .tip-tag{
+    flex:none; font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600;
+    letter-spacing:.04em; text-transform:uppercase; color:var(--accent-2);
+    background:var(--accent-soft); border-radius:5px; padding:3px 6px; margin-top:1px;
+  }
+
+  code, kbd{
+    font-family:'IBM Plex Mono',monospace; font-size:.92em;
+    background:var(--accent-soft); color:var(--accent-2);
+    padding:1px 6px; border-radius:5px;
+  }
+
+  /* --- plan table --- */
+  .table-scroll{ overflow-x:auto; border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); }
+  table{ width:100%; border-collapse:collapse; min-width:520px; background:var(--paper-2); }
+  th, td{ text-align:left; padding:13px 16px; font-size:14.5px; }
+  thead th{
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px; text-transform:uppercase;
+    letter-spacing:.05em; color:var(--ink-faint); font-weight:600;
+    border-bottom:1px solid var(--line);
+  }
+  tbody tr + tr td{ border-top:1px solid var(--line); }
+  tbody td:first-child{ font-family:'Taviraj',serif; font-weight:600; color:var(--ink); white-space:nowrap; }
+  td.price{ font-family:'IBM Plex Mono',monospace; font-size:13.5px; color:var(--accent-2); white-space:nowrap; }
+  .table-note{ margin-top:12px; font-size:13.5px; color:var(--ink-faint); }
+
+  /* --- prompt examples --- */
+  .prompt-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width:560px){ .prompt-grid{ grid-template-columns:1fr; } }
+  .prompt-card{
+    background:var(--paper-2); border:1px solid var(--line); border-radius:14px;
+    padding:18px; box-shadow:var(--shadow); position:relative;
+  }
+  .prompt-quote{
+    font-family:'Taviraj',serif; font-size:16px; font-style:italic; color:var(--ink);
+    line-height:1.5;
+  }
+  .prompt-quote::before{ content:"\201C"; color:var(--accent); }
+  .prompt-quote::after{ content:"\201D"; color:var(--accent); }
+
+  /* --- caution box --- */
+  .caution{
+    background:var(--warn-bg); border:1px solid var(--warn-line); border-radius:14px;
+    padding:20px 22px;
+  }
+  .caution ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:12px; }
+  .caution li{ display:flex; gap:10px; align-items:flex-start; }
+  .caution li::before{
+    content:"!"; flex:none; width:20px; height:20px; border-radius:50%;
+    background:var(--accent); color:var(--paper-2); font-weight:700; font-size:12px;
+    display:flex; align-items:center; justify-content:center; margin-top:2px;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .caution p{ margin:0; color:var(--ink); }
+
+  /* --- faq --- */
+  .faq{ display:flex; flex-direction:column; gap:10px; }
+  details{
+    background:var(--paper-2); border:1px solid var(--line); border-radius:12px;
+    padding:4px 4px; box-shadow:var(--shadow);
+  }
+  summary{
+    cursor:pointer; list-style:none; padding:14px 16px; font-weight:600;
+    display:flex; justify-content:space-between; align-items:center; gap:12px;
+  }
+  summary::-webkit-details-marker{ display:none; }
+  summary::after{
+    content:"+"; font-family:'IBM Plex Mono',monospace; color:var(--accent-2);
+    font-size:18px; flex:none; transition:transform .15s;
+  }
+  details[open] summary::after{ transform:rotate(45deg); }
+  details p{ padding:0 16px 16px; color:var(--ink-soft); margin:0; }
+  summary:focus-visible{ outline:2px solid var(--accent); outline-offset:-2px; border-radius:8px; }
+
+  footer{
+    margin-top:64px; padding-top:24px; border-top:1px solid var(--line);
+    font-size:13px; color:var(--ink-faint);
+  }
+  footer a{ color:var(--accent-2); }
+  .sources{ margin-top:10px; display:flex; flex-wrap:wrap; gap:4px 14px; }
+  .sources a{ color:var(--ink-faint); text-decoration:underline; text-underline-offset:2px; }
+
+  a{ color:var(--accent-2); }
+
+  @media (prefers-reduced-motion:reduce){
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">C</div>
+        <div class="brand-name">
+          <span data-th class="inline">คู่มือ Codex</span><span data-en class="inline">Codex Guide</span>
+        </div>
+      </div>
+      <div class="lang-switch" role="group" aria-label="Language / เลือกภาษา">
+        <button type="button" id="btn-th" class="active" aria-pressed="true">ไทย</button>
+        <button type="button" id="btn-en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="hero">
+      <div class="eyebrow">
+        <span data-th class="inline">คู่มือฉบับผู้เริ่มต้น</span><span data-en class="inline">Beginner's Guide</span>
+      </div>
+      <h1>
+        <span data-th>ติดตั้งและเริ่มใช้ Codex บนคอมพิวเตอร์</span>
+        <span data-en>Install and Start Using Codex on Your Computer</span>
+      </h1>
+      <p class="lede">
+        <span data-th>ไม่ต้องเป็นโปรแกรมเมอร์ก็ใช้ได้ — คู่มือนี้พาไปทีละขั้น ตั้งแต่ดาวน์โหลดจนถึงสั่งงานครั้งแรก</span>
+        <span data-en>No coding background needed — this guide walks through every step, from downloading the app to giving it your first task.</span>
+      </p>
+      <div class="meta-line">
+        <span data-th class="inline">อัปเดตล่าสุด: กันยายน 2026</span><span data-en class="inline">Last updated: September 2026</span>
+        <span aria-hidden="true">&middot;</span>
+        <span data-th class="inline">อ้างอิงหน้าเว็บทางการของ OpenAI / ChatGPT</span><span data-en class="inline">Based on OpenAI / ChatGPT's official pages</span>
+      </div>
+    </div>
+
+    <section aria-labelledby="s1-h">
+      <div class="section-head">
+        <span class="section-num">01</span>
+        <h2 id="s1-h"><span data-th class="inline">Codex คืออะไร</span><span data-en class="inline">What is Codex?</span></h2>
+      </div>
+      <p>
+        <span data-th>Codex คือผู้ช่วย AI ของ OpenAI ที่ <em>ลงมือทำงานให้จริง</em> ไม่ใช่แค่ตอบคำถามเฉยๆ เช่น จัดไฟล์ในโฟลเดอร์ เขียนสูตรคำนวณใน Excel สร้างเว็บเพจง่ายๆ หรืออ่านเอกสารยาวๆ แล้วสรุปให้ ตั้งแต่กลางปี 2026 เป็นต้นมา Codex ถูกรวมเข้าไปในแอป ChatGPT บนคอมพิวเตอร์เรียบร้อยแล้ว — ไม่ต้องติดตั้งแยกเป็นอีกแอป มีแอป ChatGPT ก็ใช้ Codex ได้เลย</span>
+        <span data-en>Codex is OpenAI's AI agent that <em>actually does tasks</em> for you, not just chats. It can organize files in a folder, write a spreadsheet formula, build a simple webpage, or read a long document and summarize it. Since mid-2026, Codex has been built directly into the ChatGPT desktop app — nothing separate to install. If you have the ChatGPT app, you already have Codex.</span>
+      </p>
+      <p>
+        <span data-th>คู่มือนี้พูดถึง Codex เวอร์ชันบนคอมพิวเตอร์ (desktop) เท่านั้น ไม่ใช่เวอร์ชันบรรทัดคำสั่ง (<code>Codex CLI</code>) ที่เขียนไว้สำหรับโปรแกรมเมอร์</span>
+        <span data-en>This guide covers the desktop version of Codex only — not <code>Codex CLI</code>, the terminal tool built for programmers.</span>
+      </p>
+    </section>
+
+    <section aria-labelledby="s2-h">
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <h2 id="s2-h"><span data-th class="inline">ก่อนเริ่ม ต้องมีอะไรบ้าง</span><span data-en class="inline">What you'll need</span></h2>
+      </div>
+      <ul class="checklist">
+        <li>
+          <span class="check-mark" aria-hidden="true">&#10003;</span>
+          <p>
+            <span data-th>คอมพิวเตอร์ที่ใช้ Windows 10 (รุ่น 22H2 ขึ้นไป) หรือ Windows 11 (แนะนำ) — หรือ Mac ที่ใช้ macOS 14 ขึ้นไป (รองรับทั้งชิป Apple Silicon และ Intel) ส่วนผู้ใช้ Linux ก็เริ่มใช้งานได้แล้ว แต่ยังเป็นรุ่นทดลอง</span>
+            <span data-en>A computer on Windows 10 (22H2 or newer) or Windows 11 (recommended) — or a Mac on macOS 14 or newer (Apple Silicon or Intel). Linux is available too, currently in preview.</span>
+          </p>
+        </li>
+        <li>
+          <span class="check-mark" aria-hidden="true">&#10003;</span>
+          <p>
+            <span data-th>บัญชี ChatGPT — ใช้บัญชีฟรีเริ่มต้นได้เลย ไม่ต้องเสียเงินก่อน (แพ็กเกจฟรีจะจำกัดจำนวนงานต่อวัน)</span>
+            <span data-en>A ChatGPT account — a free account is enough to get started (the free plan has a daily task limit).</span>
+          </p>
+        </li>
+        <li>
+          <span class="check-mark" aria-hidden="true">&#10003;</span>
+          <p>
+            <span data-th>อินเทอร์เน็ตที่เชื่อมต่อได้ตลอดช่วงที่ใช้งาน</span>
+            <span data-en>An internet connection while you're using it.</span>
+          </p>
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="s3-h">
+      <div class="section-head">
+        <span class="section-num">03</span>
+        <h2 id="s3-h"><span data-th class="inline">ขั้นตอนติดตั้งและเริ่มใช้งาน</span><span data-en class="inline">Install and first-run steps</span></h2>
+      </div>
+
+      <ol class="steps">
+        <li class="step">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <div class="step-title"><span data-th class="inline">ดาวน์โหลดแอป ChatGPT</span><span data-en class="inline">Download the ChatGPT app</span></div>
+            <p class="step-text">
+              <span data-th>เปิดเบราว์เซอร์ไปที่ <code>chatgpt.com/download</code> แล้วเลือกดาวน์โหลดตามเครื่องที่ใช้ (Windows, Mac หรือ Linux)</span>
+              <span data-en>Open your browser and go to <code>chatgpt.com/download</code>, then choose the download for your computer (Windows, Mac, or Linux).</span>
+            </p>
+            <div class="tip">
+              <span class="tip-tag" data-th>สำคัญ</span><span class="tip-tag" data-en>Important</span>
+              <span data-th>ดาวน์โหลดจากหน้านี้เท่านั้น เพราะเป็นหน้าทางการของ OpenAI — อย่าโหลดจากเว็บอื่นที่อ้างว่าเป็น Codex หรือ ChatGPT</span>
+              <span data-en>Only download from this page — it's OpenAI's official site. Never download from another site claiming to be Codex or ChatGPT.</span>
+            </div>
+          </div>
+        </li>
+
+        <li class="step">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <div class="step-title"><span data-th class="inline">ติดตั้งแอป</span><span data-en class="inline">Install the app</span></div>
+            <p class="step-text">
+              <span data-th>เปิดไฟล์ที่ดาวน์โหลดมาแล้วทำตามขั้นตอนติดตั้งตามปกติ บน Windows จะติดตั้งผ่าน Microsoft Store ก็ได้เช่นกัน ไม่ต้องตั้งค่าอะไรเพิ่ม</span>
+              <span data-en>Open the downloaded file and follow the normal install steps. On Windows, you can also install it through the Microsoft Store. No extra setup needed.</span>
+            </p>
+          </div>
+        </li>
+
+        <li class="step">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <div class="step-title"><span data-th class="inline">เข้าสู่ระบบด้วยบัญชี ChatGPT</span><span data-en class="inline">Sign in with your ChatGPT account</span></div>
+            <p class="step-text">
+              <span data-th>เปิดแอปแล้วกด "เข้าสู่ระบบ" ถ้ายังไม่มีบัญชี สมัครฟรีได้ทันทีในหน้านั้น ระบบจะพาไปยืนยันตัวตนผ่านเบราว์เซอร์แล้วพากลับมาที่แอปให้เอง</span>
+              <span data-en>Open the app and choose "Sign in." If you don't have an account yet, you can create a free one right there. It opens your browser to confirm your identity, then brings you back to the app automatically.</span>
+            </p>
+          </div>
+        </li>
+
+        <li class="step">
+          <div class="step-num">04</div>
+          <div class="step-body">
+            <div class="step-title"><span data-th class="inline">หาโหมด Codex ในแอป</span><span data-en class="inline">Find Codex inside the app</span></div>
+            <p class="step-text">
+              <span data-th>ในแอปจะมีโหมดให้เลือกระหว่าง <strong>Chat</strong> (คุยธรรมดา) กับ <strong>Work / Codex</strong> (ให้ลงมือทำงานจริง) ให้สลับไปโหมด Codex/Work — สังเกตง่ายๆ คือโหมดนี้จะให้เลือก "เปิดโฟลเดอร์" หรือ "เริ่มโปรเจกต์" แทนที่จะพิมพ์คุยเฉยๆ</span>
+              <span data-en>The app lets you switch between <strong>Chat</strong> (plain conversation) and <strong>Work / Codex</strong> (which actually performs tasks). Switch to Codex/Work mode — you'll recognize it because it offers to "open a folder" or "start a project" instead of just chatting.</span>
+            </p>
+          </div>
+        </li>
+
+        <li class="step">
+          <div class="step-num">05</div>
+          <div class="step-body">
+            <div class="step-title"><span data-th class="inline">เริ่มงานแรก</span><span data-en class="inline">Start your first task</span></div>
+            <p class="step-text">
+              <span data-th>เลือก "Quick chat" ถ้าแค่อยากถามอะไรง่ายๆ หรือเลือก "เปิดโฟลเดอร์" ถ้าต้องการให้ Codex ทำงานกับไฟล์จริงในเครื่อง จากนั้นพิมพ์สิ่งที่ต้องการเป็นภาษาพูดธรรมดา ไม่ต้องรู้ศัพท์เทคนิคใดๆ</span>
+              <span data-en>Choose "Quick chat" for a simple question, or "open a folder" if you want Codex to work on real files on your computer. Then type what you want in plain language — no technical vocabulary required.</span>
+            </p>
+          </div>
+        </li>
+
+        <li class="step">
+          <div class="step-num">06</div>
+          <div class="step-body">
+            <div class="step-title"><span data-th class="inline">ตรวจดูก่อนอนุมัติ</span><span data-en class="inline">Review before you approve</span></div>
+            <p class="step-text">
+              <span data-th>ก่อนที่ Codex จะเปลี่ยนแปลงอะไรจริง มันจะแสดงสิ่งที่กำลังจะทำให้ดูก่อนเสมอ อ่านให้แน่ใจแล้วค่อยกด "Approve" ถ้าไม่ตรงกับที่ต้องการ พิมพ์บอกให้แก้ไขได้ทันที ไม่ต้องเริ่มใหม่</span>
+              <span data-en>Before Codex actually changes anything, it always shows you what it's about to do. Read it, then click "Approve" once you're sure. If it's not quite right, just type what to change — no need to start over.</span>
+            </p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="s4-h">
+      <div class="section-head">
+        <span class="section-num">04</span>
+        <h2 id="s4-h"><span data-th class="inline">แพ็กเกจไหนใช้ได้บ้าง</span><span data-en class="inline">Which plan do you need?</span></h2>
+      </div>
+      <p class="section-intro">
+        <span data-th>Codex ใช้ได้กับทุกแพ็กเกจของ ChatGPT รวมถึงแบบฟรี ตัวเลขด้านล่างเป็นค่าประมาณ ณ กันยายน 2026 เท่านั้น — OpenAI ปรับบ่อยมาก ควรเช็กตัวเลขจริงที่ <code>chatgpt.com/codex/pricing</code> ก่อนตัดสินใจ</span>
+        <span data-en>Codex works on every ChatGPT plan, including Free. The figures below are rough estimates as of September 2026 only — OpenAI updates these often, so check the real numbers at <code>chatgpt.com/codex/pricing</code> before deciding.</span>
+      </p>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th><span data-th class="inline">แพ็กเกจ</span><span data-en class="inline">Plan</span></th>
+              <th><span data-th class="inline">ราคา</span><span data-en class="inline">Price</span></th>
+              <th><span data-th class="inline">ใช้งานได้ประมาณ</span><span data-en class="inline">Roughly good for</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Free</td>
+              <td class="price"><span data-th class="inline">ฟรี</span><span data-en class="inline">Free</span></td>
+              <td><span data-th class="inline">ลองใช้งาน มีจำกัดจำนวนงานต่อวัน</span><span data-en class="inline">Trying it out — limited tasks per day</span></td>
+            </tr>
+            <tr>
+              <td>Plus</td>
+              <td class="price">~$20 <span data-th class="inline">/เดือน</span><span data-en class="inline">/mo</span></td>
+              <td><span data-th class="inline">ใช้ทุกวันแบบสม่ำเสมอ</span><span data-en class="inline">Everyday, regular use</span></td>
+            </tr>
+            <tr>
+              <td>Pro</td>
+              <td class="price">~$100&ndash;200 <span data-th class="inline">/เดือน</span><span data-en class="inline">/mo</span></td>
+              <td><span data-th class="inline">ใช้งานหนัก ต่อเนื่องทั้งวัน</span><span data-en class="inline">Heavy, all-day usage</span></td>
+            </tr>
+            <tr>
+              <td>Business</td>
+              <td class="price">~$25 <span data-th class="inline">/คน/เดือน</span><span data-en class="inline">/user/mo</span></td>
+              <td><span data-th class="inline">ทีมหรือบริษัท</span><span data-en class="inline">Teams and companies</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">
+        <span data-th>Enterprise มีราคาแยกต่างหาก ติดต่อฝ่ายขายโดยตรง</span>
+        <span data-en>Enterprise pricing is separate — contact sales directly.</span>
+      </p>
+    </section>
+
+    <section aria-labelledby="s5-h">
+      <div class="section-head">
+        <span class="section-num">05</span>
+        <h2 id="s5-h"><span data-th class="inline">ลองพิมพ์แบบนี้ดู</span><span data-en class="inline">Try typing something like this</span></h2>
+      </div>
+      <p class="section-intro">
+        <span data-th>ตัวอย่างงานที่คนทั่วไป (ไม่ใช่สายเทค) ลองสั่งได้จริง — พิมพ์เป็นภาษาพูดธรรมดา ไม่ต้องมีศัพท์เทคนิค</span>
+        <span data-en>Real examples a non-technical person can try — plain language, no technical terms needed.</span>
+      </p>
+      <div class="prompt-grid">
+        <div class="prompt-card">
+          <p class="prompt-quote">
+            <span data-th>จัดไฟล์รูปในโฟลเดอร์นี้ให้เป็นหมวดหมู่ตามวันที่ถ่าย</span>
+            <span data-en>Organize the photos in this folder into folders by the date they were taken.</span>
+          </p>
+        </div>
+        <div class="prompt-card">
+          <p class="prompt-quote">
+            <span data-th>อ่านไฟล์ PDF นี้แล้วสรุปประเด็นสำคัญเป็นข้อๆ</span>
+            <span data-en>Read this PDF and summarize the key points as a bullet list.</span>
+          </p>
+        </div>
+        <div class="prompt-card">
+          <p class="prompt-quote">
+            <span data-th>ช่วยเขียนสูตร Excel รวมยอดขายทั้งเดือนจากตารางนี้</span>
+            <span data-en>Write an Excel formula that totals this month's sales from this table.</span>
+          </p>
+        </div>
+        <div class="prompt-card">
+          <p class="prompt-quote">
+            <span data-th>สร้างหน้าเว็บง่ายๆ แนะนำร้านกาแฟของฉัน มีเมนูกับเบอร์โทร</span>
+            <span data-en>Build a simple webpage introducing my coffee shop, with a menu and phone number.</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="s6-h">
+      <div class="section-head">
+        <span class="section-num">06</span>
+        <h2 id="s6-h"><span data-th class="inline">ข้อควรระวัง</span><span data-en class="inline">Things to keep in mind</span></h2>
+      </div>
+      <div class="caution">
+        <ul>
+          <li>
+            <p>
+              <span data-th>อ่านสิ่งที่ Codex กำลังจะทำก่อนกด Approve ทุกครั้ง เหมือนตรวจงานพนักงานใหม่ก่อนเซ็นอนุมัติ</span>
+              <span data-en>Always read what Codex is about to do before you approve — treat it like checking a new employee's work before signing off.</span>
+            </p>
+          </li>
+          <li>
+            <p>
+              <span data-th>งานที่สำคัญ ให้สำรองไฟล์ไว้ก่อน เผื่อผลลัพธ์ไม่ตรงใจ จะได้ย้อนกลับได้</span>
+              <span data-en>For anything important, back up your files first, so you can undo if the result isn't what you wanted.</span>
+            </p>
+          </li>
+          <li>
+            <p>
+              <span data-th>อย่าให้ Codex เข้าถึงบัญชีหรือข้อมูลที่อ่อนไหว (รหัสผ่าน, บัญชีธนาคาร) เว้นแต่จะเข้าใจดีว่ามันกำลังทำอะไรกับสิ่งนั้น</span>
+              <span data-en>Don't give Codex access to sensitive accounts or data (passwords, banking) unless you clearly understand what it will do with them.</span>
+            </p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="s7-h">
+      <div class="section-head">
+        <span class="section-num">07</span>
+        <h2 id="s7-h"><span data-th class="inline">แก้ปัญหาเบื้องต้น</span><span data-en class="inline">Basic troubleshooting</span></h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary><span data-th class="inline">เข้าสู่ระบบไม่ได้</span><span data-en class="inline">Can't sign in</span></summary>
+          <p>
+            <span data-th>เช็กอินเทอร์เน็ตและเช็กว่าบัญชี ChatGPT ยังใช้งานได้อยู่ ลองปิดแล้วเปิดแอปใหม่</span>
+            <span data-en>Check your internet connection and make sure your ChatGPT account is active. Try closing and reopening the app.</span>
+          </p>
+        </details>
+        <details>
+          <summary><span data-th class="inline">เปิดแอปไม่ขึ้นบน Windows</span><span data-en class="inline">The app won't open on Windows</span></summary>
+          <p>
+            <span data-th>ตรวจว่าเครื่องเป็น Windows 10 รุ่น 22H2 ขึ้นไป หรือ Windows 11 ถ้ายังไม่ได้ ลองติดตั้งใหม่ผ่าน Microsoft Store</span>
+            <span data-en>Make sure your PC is on Windows 10 22H2 or later, or Windows 11. If it still won't open, try reinstalling via the Microsoft Store.</span>
+          </p>
+        </details>
+        <details>
+          <summary><span data-th class="inline">หาโหมด Codex ไม่เจอ</span><span data-en class="inline">Can't find Codex mode</span></summary>
+          <p>
+            <span data-th>แอปอาจยังเป็นเวอร์ชันเก่า ให้เช็กอัปเดตแอป โดยปกติแอปจะอัปเดตให้อัตโนมัติอยู่แล้ว</span>
+            <span data-en>Your app may be on an older version. Check for an app update — it normally updates itself automatically.</span>
+          </p>
+        </details>
+        <details>
+          <summary><span data-th class="inline">ใช้ไม่ได้ บอกว่าครบโควตาแล้ว</span><span data-en class="inline">It says I've hit my usage limit</span></summary>
+          <p>
+            <span data-th>แพ็กเกจฟรีมีจำกัดจำนวนงานต่อวัน รอให้โควตารีเซ็ตวันถัดไป หรืออัปเกรดแพ็กเกจถ้าต้องใช้บ่อย</span>
+            <span data-en>The free plan has a daily task limit. Wait for it to reset the next day, or upgrade your plan if you need it often.</span>
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        <span data-th>คู่มือนี้จัดทำอย่างไม่เป็นทางการ อ้างอิงจากหน้าเว็บทางการของ OpenAI / ChatGPT ณ กันยายน 2026 หน้าตาแอปอาจเปลี่ยนไปหลังจากนี้ ตรวจสอบข้อมูลล่าสุดได้ที่ <a href="https://chatgpt.com/download" target="_blank" rel="noopener">chatgpt.com/download</a></span>
+        <span data-en>This is an unofficial guide, based on OpenAI / ChatGPT's official pages as of September 2026. The app's interface may change over time — check the latest at <a href="https://chatgpt.com/download" target="_blank" rel="noopener">chatgpt.com/download</a></span>
+      </p>
+      <div class="sources">
+        <span data-th class="inline">แหล่งอ้างอิง:</span><span data-en class="inline">Sources:</span>
+        <a href="https://chatgpt.com/download" target="_blank" rel="noopener">chatgpt.com/download</a>
+        <a href="https://learn.chatgpt.com/docs/app" target="_blank" rel="noopener">learn.chatgpt.com/docs/app</a>
+        <a href="https://openai.com/index/introducing-the-codex-app/" target="_blank" rel="noopener">openai.com &mdash; Introducing the Codex app</a>
+      </div>
+    </footer>
+
+  </div>
+
+<script>
+(function(){
+  var body = document.body;
+  var html = document.documentElement;
+  var btnTh = document.getElementById('btn-th');
+  var btnEn = document.getElementById('btn-en');
+
+  function setLang(lang){
+    var isEn = lang === 'en';
+    body.classList.toggle('lang-en', isEn);
+    html.setAttribute('lang', isEn ? 'en' : 'th');
+    btnEn.classList.toggle('active', isEn);
+    btnTh.classList.toggle('active', !isEn);
+    btnEn.setAttribute('aria-pressed', String(isEn));
+    btnTh.setAttribute('aria-pressed', String(!isEn));
+    try { localStorage.setItem('codex-guide-lang', lang); } catch(e){}
+  }
+
+  btnTh.addEventListener('click', function(){ setLang('th'); });
+  btnEn.addEventListener('click', function(){ setLang('en'); });
+
+  var saved = null;
+  try { saved = localStorage.getItem('codex-guide-lang'); } catch(e){}
+  if (saved === 'en') setLang('en');
+})();
+</script>
+</body>
+</html>
