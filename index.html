@@ -233,19 +233,22 @@
   .diagram-svg .arrow-head{ fill:var(--ink-faint); }
   figcaption{ margin-top:12px; font-size:13.5px; color:var(--ink-soft); text-align:center; font-style:italic; }
 
-  /* --- prompt examples --- */
-  .prompt-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  @media (max-width:560px){ .prompt-grid{ grid-template-columns:1fr; } }
-  .prompt-card{
+  /* --- capability / use-case cards --- */
+  .capability-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px; }
+  @media (max-width:560px){ .capability-grid{ grid-template-columns:1fr; } }
+  .capability-card{
     background:var(--paper-2); border:1px solid var(--line); border-radius:14px;
-    padding:18px; box-shadow:var(--shadow); position:relative;
+    padding:18px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:10px;
   }
-  .prompt-quote{
-    font-family:'Taviraj',serif; font-size:16px; font-style:italic; color:var(--ink);
-    line-height:1.5;
+  .capability-head{ display:flex; align-items:center; gap:10px; }
+  .capability-icon{ font-size:20px; line-height:1; flex:none; }
+  .capability-title{ font-family:'Taviraj',serif; font-weight:600; font-size:16px; color:var(--ink); }
+  .capability-blurb{ color:var(--ink-soft); font-size:14px; margin:0; }
+  .capability-examples{ display:flex; flex-direction:column; gap:8px; margin-top:2px; }
+  .capability-example{
+    font-family:'Taviraj',serif; font-style:italic; font-size:13.5px; color:var(--ink);
+    border-left:2px solid var(--accent); padding-left:10px; margin:0; line-height:1.45;
   }
-  .prompt-quote::before{ content:"\201C"; color:var(--accent); }
-  .prompt-quote::after{ content:"\201D"; color:var(--accent); }
 
   /* --- caution box --- */
   .caution{
@@ -623,36 +626,83 @@
     <section aria-labelledby="s5-h">
       <div class="section-head">
         <span class="section-num">06</span>
-        <h2 id="s5-h"><span data-th class="inline">ลองพิมพ์แบบนี้ดู</span><span data-en class="inline">Try typing something like this</span></h2>
+        <h2 id="s5-h"><span data-th>ความสามารถ &amp; ตัวอย่างการใช้งานจริง</span><span data-en>Abilities &amp; Real-World Examples</span></h2>
       </div>
       <p class="section-intro">
-        <span data-th>ตัวอย่างงานที่คนทั่วไป (ไม่ใช่สายเทค) ลองสั่งได้จริง — พิมพ์เป็นภาษาพูดธรรมดา ไม่ต้องมีศัพท์เทคนิค</span>
-        <span data-en>Real examples a non-technical person can try — plain language, no technical terms needed.</span>
+        <span data-th>Codex ทำได้มากกว่าที่คิด — นี่คือหมวดที่คนทั่วไป (ไม่ใช่สายเทค) ใช้บ่อยที่สุด พร้อมประโยคตัวอย่างที่พิมพ์ได้เลยทันที</span>
+        <span data-en>Codex can do more than most people expect — here are the categories non-technical users reach for most, with example phrasing you can type as-is.</span>
       </p>
-      <div class="prompt-grid">
-        <div class="prompt-card">
-          <p class="prompt-quote">
-            <span data-th>จัดไฟล์รูปในโฟลเดอร์นี้ให้เป็นหมวดหมู่ตามวันที่ถ่าย</span>
-            <span data-en>Organize the photos in this folder into folders by the date they were taken.</span>
-          </p>
+      <div class="capability-grid">
+        <div class="capability-card">
+          <div class="capability-head">
+            <span class="capability-icon" aria-hidden="true">&#128193;</span>
+            <span class="capability-title"><span data-th>จัดการไฟล์</span><span data-en>File &amp; folder management</span></span>
+          </div>
+          <p class="capability-blurb"><span data-th>จัดระเบียบ เปลี่ยนชื่อ ย้าย หรือค้นไฟล์ในเครื่อง โดยไม่ต้องทำเองทีละไฟล์</span><span data-en>Organizes, renames, moves, or finds files on your computer — no doing it by hand, file by file.</span></p>
+          <div class="capability-examples">
+            <p class="capability-example"><span data-th>จัดไฟล์รูปในโฟลเดอร์นี้ให้เป็นหมวดหมู่ตามวันที่ถ่าย</span><span data-en>Organize the photos in this folder into folders by the date they were taken.</span></p>
+            <p class="capability-example"><span data-th>เปลี่ยนชื่อไฟล์ทั้งหมดในโฟลเดอร์นี้ให้เป็นรูปแบบ วันที่-ชื่องาน</span><span data-en>Rename every file in this folder to the pattern date-taskname.</span></p>
+          </div>
         </div>
-        <div class="prompt-card">
-          <p class="prompt-quote">
-            <span data-th>อ่านไฟล์ PDF นี้แล้วสรุปประเด็นสำคัญเป็นข้อๆ</span>
-            <span data-en>Read this PDF and summarize the key points as a bullet list.</span>
-          </p>
+
+        <div class="capability-card">
+          <div class="capability-head">
+            <span class="capability-icon" aria-hidden="true">&#128196;</span>
+            <span class="capability-title"><span data-th>เอกสาร &amp; สรุปข้อมูล</span><span data-en>Documents &amp; summaries</span></span>
+          </div>
+          <p class="capability-blurb"><span data-th>อ่านเอกสารยาวๆ แทนคุณ แล้วสรุปหรือดึงข้อมูลที่ต้องการออกมา</span><span data-en>Reads long documents for you, then summarizes them or pulls out the parts you need.</span></p>
+          <div class="capability-examples">
+            <p class="capability-example"><span data-th>อ่านไฟล์ PDF นี้แล้วสรุปประเด็นสำคัญเป็นข้อๆ</span><span data-en>Read this PDF and summarize the key points as a bullet list.</span></p>
+            <p class="capability-example"><span data-th>รวมสัญญา 5 ไฟล์นี้เป็นตารางเปรียบเทียบเงื่อนไข</span><span data-en>Combine these 5 contract files into one comparison table of terms.</span></p>
+          </div>
         </div>
-        <div class="prompt-card">
-          <p class="prompt-quote">
-            <span data-th>ช่วยเขียนสูตร Excel รวมยอดขายทั้งเดือนจากตารางนี้</span>
-            <span data-en>Write an Excel formula that totals this month's sales from this table.</span>
-          </p>
+
+        <div class="capability-card">
+          <div class="capability-head">
+            <span class="capability-icon" aria-hidden="true">&#128202;</span>
+            <span class="capability-title"><span data-th>สเปรดชีต &amp; ตัวเลข</span><span data-en>Spreadsheets &amp; numbers</span></span>
+          </div>
+          <p class="capability-blurb"><span data-th>เขียนสูตร ทำความสะอาดข้อมูล หรือสรุปตัวเลขใน Excel ให้</span><span data-en>Writes formulas, cleans up messy data, or summarizes numbers in Excel.</span></p>
+          <div class="capability-examples">
+            <p class="capability-example"><span data-th>ช่วยเขียนสูตร Excel รวมยอดขายทั้งเดือนจากตารางนี้</span><span data-en>Write an Excel formula that totals this month's sales from this table.</span></p>
+            <p class="capability-example"><span data-th>ไฟล์นี้มีแถวซ้ำเยอะ ช่วยลบให้เหลือแค่รายการที่ไม่ซ้ำ</span><span data-en>This file has a lot of duplicate rows — remove them and keep only unique entries.</span></p>
+          </div>
         </div>
-        <div class="prompt-card">
-          <p class="prompt-quote">
-            <span data-th>สร้างหน้าเว็บง่ายๆ แนะนำร้านกาแฟของฉัน มีเมนูกับเบอร์โทร</span>
-            <span data-en>Build a simple webpage introducing my coffee shop, with a menu and phone number.</span>
-          </p>
+
+        <div class="capability-card">
+          <div class="capability-head">
+            <span class="capability-icon" aria-hidden="true">&#127760;</span>
+            <span class="capability-title"><span data-th>เว็บเพจ &amp; งานนำเสนอ</span><span data-en>Web pages &amp; simple docs</span></span>
+          </div>
+          <p class="capability-blurb"><span data-th>สร้างหน้าเว็บ หรือสไลด์นำเสนอง่ายๆ โดยไม่ต้องเขียนโค้ดเอง</span><span data-en>Builds a webpage or a simple slide deck — no coding needed on your end.</span></p>
+          <div class="capability-examples">
+            <p class="capability-example"><span data-th>สร้างหน้าเว็บง่ายๆ แนะนำร้านกาแฟของฉัน มีเมนูกับเบอร์โทร</span><span data-en>Build a simple webpage introducing my coffee shop, with a menu and phone number.</span></p>
+            <p class="capability-example"><span data-th>ทำสไลด์นำเสนอ 5 หน้าจากไฟล์สรุปนี้</span><span data-en>Turn this summary file into a 5-slide presentation.</span></p>
+          </div>
+        </div>
+
+        <div class="capability-card">
+          <div class="capability-head">
+            <span class="capability-icon" aria-hidden="true">&#128269;</span>
+            <span class="capability-title"><span data-th>ค้นคว้า &amp; เปรียบเทียบข้อมูล</span><span data-en>Research &amp; comparisons</span></span>
+          </div>
+          <p class="capability-blurb"><span data-th>ค้นข้อมูลจากหลายแหล่งแล้วสรุปหรือเทียบให้เห็นภาพเดียว (ต้องใช้แอปเวอร์ชันล่าสุดที่เปิดโหมดท่องเว็บ)</span><span data-en>Looks things up across sources, then summarizes or compares them for you (needs the latest app version with browsing enabled).</span></p>
+          <div class="capability-examples">
+            <p class="capability-example"><span data-th>เปรียบเทียบราคาเครื่องพิมพ์รุ่นนี้จาก 3 ร้านออนไลน์</span><span data-en>Compare the price of this printer model across 3 online stores.</span></p>
+            <p class="capability-example"><span data-th>ช่วยหาข้อมูลวันหยุดราชการปีหน้าแล้วทำเป็นตาราง</span><span data-en>Look up next year's public holidays and put them in a table.</span></p>
+          </div>
+        </div>
+
+        <div class="capability-card">
+          <div class="capability-head">
+            <span class="capability-icon" aria-hidden="true">&#128257;</span>
+            <span class="capability-title"><span data-th>งานซ้ำๆ ที่น่าเบื่อ</span><span data-en>Repetitive busywork</span></span>
+          </div>
+          <p class="capability-blurb"><span data-th>งานที่ต้องทำซ้ำๆ ทีละไฟล์ ให้มันทำรวดเดียวแทนคุณ</span><span data-en>The kind of repetitive, one-file-at-a-time work you'd rather not do by hand.</span></p>
+          <div class="capability-examples">
+            <p class="capability-example"><span data-th>แปลงไฟล์ .heic ทั้งหมดในโฟลเดอร์นี้เป็น .jpg</span><span data-en>Convert every .heic file in this folder to .jpg.</span></p>
+            <p class="capability-example"><span data-th>รวมไฟล์ Excel 10 ไฟล์นี้เป็นไฟล์เดียว</span><span data-en>Merge these 10 Excel files into one.</span></p>
+          </div>
         </div>
       </div>
     </section>
