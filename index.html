@@ -250,6 +250,28 @@
     border-left:2px solid var(--accent); padding-left:10px; margin:0; line-height:1.45;
   }
 
+  /* --- code snippet block --- */
+  pre.snippet{
+    background:var(--paper-2); border:1px solid var(--line); border-radius:10px;
+    padding:12px 14px; overflow-x:auto; font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px; color:var(--ink-soft); line-height:1.6; margin:12px 0 0;
+  }
+
+  /* --- pros / cons --- */
+  .tradeoff-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:560px){ .tradeoff-grid{ grid-template-columns:1fr; } }
+  .tradeoff-col{
+    background:var(--paper-2); border:1px solid var(--line); border-radius:14px;
+    padding:18px; box-shadow:var(--shadow);
+  }
+  .tradeoff-col h3{ font-size:15px; margin:0 0 10px; }
+  .tradeoff-col.pros h3{ color:var(--accent-2); }
+  .tradeoff-col.cons h3{ color:var(--accent); }
+  .tradeoff-col ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .tradeoff-col li{ font-size:14px; color:var(--ink-soft); padding-left:16px; position:relative; }
+  .tradeoff-col.pros li::before{ content:"+"; position:absolute; left:0; color:var(--accent-2); font-weight:700; font-family:'IBM Plex Mono',monospace; }
+  .tradeoff-col.cons li::before{ content:"\2013"; position:absolute; left:0; color:var(--accent); font-weight:700; font-family:'IBM Plex Mono',monospace; }
+
   /* --- caution box --- */
   .caution{
     background:var(--warn-bg); border:1px solid var(--warn-line); border-radius:14px;
@@ -771,6 +793,151 @@
           </p>
         </details>
       </div>
+    </section>
+
+    <section aria-labelledby="s9-h">
+      <div class="section-head">
+        <span class="section-num">09</span>
+        <h2 id="s9-h"><span data-th>ให้ Codex จำงานข้ามครั้งได้</span><span data-en>Make Codex Remember Across Sessions</span></h2>
+        <span class="tip-tag"><span data-th>ระดับกลาง</span><span data-en>Intermediate</span></span>
+      </div>
+      <p>
+        <span data-th>พื้นฐานด้านบนพอเริ่มใช้งานได้แล้ว แต่ถ้าใช้ทุกวันจะเจอปัญหาเดิม: ต้องอธิบายบริบทซ้ำทุกครั้ง เพราะพอปิดเซสชัน Codex ก็ "ลืม" — นี่คือ 3 แนวคิดง่ายๆ ที่คนใช้ AI agent จริงจังใช้แก้ปัญหานี้ <em>(หมายเหตุ: ไม่ใช่ปุ่มในแอป Codex โดยตรง แต่เป็นวิธีทำงานที่คุณตั้งเอง — ใช้ได้กับ AI agent ตัวไหนก็ได้)</em></span>
+        <span data-en>The basics above get you started, but daily use hits the same wall: you re-explain context every time, because Codex "forgets" once a session ends. Here are 3 simple concepts serious AI-agent users rely on to fix this. <em>(Note: these aren't literal buttons in the Codex app — they're working practices you set up yourself, and they work with any AI agent.)</em></span>
+      </p>
+
+      <div class="tradeoff-grid" style="margin-top:20px;">
+        <div class="tradeoff-col pros">
+          <h3><span data-th>ข้อดีถ้าตั้งระบบนี้</span><span data-en>Upside of setting this up</span></h3>
+          <ul>
+            <li><span data-th>เร็วกว่าทำเอง โดยเฉพาะงานที่ทำซ้ำบ่อย</span><span data-en>Faster than doing it yourself, especially repeat work</span></li>
+            <li><span data-th>มอบหมายแล้วไปทำอย่างอื่นได้ ไม่ต้องเฝ้าหน้าจอ</span><span data-en>Delegate it and go do something else — no need to babysit</span></li>
+            <li><span data-th>ถ้าตั้ง MEMORY.md ไว้ดี คุณภาพงานจะสม่ำเสมอขึ้นตามเวลา</span><span data-en>With a good MEMORY.md, output quality gets more consistent over time</span></li>
+          </ul>
+        </div>
+        <div class="tradeoff-col cons">
+          <h3><span data-th>ข้อควรระวัง</span><span data-en>Watch out for</span></h3>
+          <ul>
+            <li><span data-th>ยังพลาดได้ (hallucinate) — ต้องมีคนตรวจทานเสมอ</span><span data-en>It can still be wrong (hallucinate) — a human must always review</span></li>
+            <li><span data-th>สั่งงานคลุมเครือ = ได้ผลลัพธ์คลุมเครือ</span><span data-en>Vague instructions = vague results</span></li>
+            <li><span data-th>ให้สิทธิ์เข้าถึงไฟล์/บัญชีเกินจำเป็น = เสี่ยงด้านความปลอดภัย</span><span data-en>Over-granting file/account access = a security risk</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <ol class="steps" style="margin-top:28px;">
+        <li class="step">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <div class="step-title"><span data-th>ไฟล์ความจำ (MEMORY.md)</span><span data-en>A memory file (MEMORY.md)</span></div>
+            <p class="step-text">
+              <span data-th>สร้างไฟล์ข้อความธรรมดาชื่อ <code>MEMORY.md</code> ไว้ในโฟลเดอร์งาน แล้วบอก Codex ว่า "อ่านไฟล์นี้ก่อนเริ่มงานทุกครั้ง และจดสิ่งที่ตัดสินใจไว้ท้ายไฟล์เมื่อทำงานเสร็จ" — แค่นี้เซสชันหน้าก็ไม่ต้องอธิบายซ้ำ</span>
+              <span data-en>Create a plain text file called <code>MEMORY.md</code> in your project folder. Tell Codex: "read this file before starting any task, and jot down what you decided at the end when you finish." That's it — next session it already knows the context.</span>
+            </p>
+            <pre class="snippet"># MEMORY.md
+- 2026-09-05: เว็บไซต์ร้านกาแฟใช้สีน้ำตาล-ครีม ห้ามใช้สีอื่น
+- 2026-09-04: ลูกค้าอยากให้เมนูอยู่หน้าแรก ไม่ต้องมีหน้าแยก</pre>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <div class="step-title"><span data-th>ไฟล์วิธีทำงานซ้ำ (SKILL.md)</span><span data-en>A how-to file for repeat tasks (SKILL.md)</span></div>
+            <p class="step-text">
+              <span data-th>งานที่ทำซ้ำบ่อย (เช่น "ทุกครั้งที่รีวิวโค้ด ให้เช็ก 5 ข้อนี้เสมอ") เขียนเป็นไฟล์ขั้นตอนแยกต่างหาก แล้วบอก Codex ให้ทำตามไฟล์นั้นเวลางานตรงหัวข้อ — เหมือนเขียน SOP ให้พนักงานใหม่ แทนที่จะสอนปากเปล่าใหม่ทุกครั้ง</span>
+              <span data-en>For work you repeat often (e.g. "every code review, always check these 5 things"), write it as a separate step-by-step file, and tell Codex to follow it whenever a task matches. It's an SOP for a new hire, instead of re-explaining out loud every time.</span>
+            </p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <div class="step-title"><span data-th>เข้าใจคำว่า "harness"</span><span data-en>Understand the word "harness"</span></div>
+            <p class="step-text">
+              <span data-th>"Harness" คือแอปที่ห่อโมเดล AI แล้วให้เครื่องมือมัน (แตะไฟล์ ท่องเว็บ จำ context) — Chat เปล่าๆ คือโมเดลที่ไม่มี harness (ตอบอย่างเดียว) ส่วน Codex/Work คือโมเดลเดียวกัน + harness ที่ให้แตะไฟล์จริงได้ เข้าใจจุดนี้แล้ว เวลาเทียบเครื่องมืออื่น (Claude Code, Codex CLI ฯลฯ) จะรู้ว่ากำลังเทียบ "harness" ไม่ใช่แค่เทียบโมเดล</span>
+              <span data-en>A "harness" is the app that wraps an AI model and hands it tools (touching files, browsing, remembering context). Plain Chat is a model with no harness — it only replies. Codex/Work is the same kind of model plus a harness that lets it touch real files. Understand this, and when comparing other tools (Claude Code, Codex CLI, etc.) you'll know you're comparing harnesses, not just models.</span>
+            </p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="s10-h">
+      <div class="section-head">
+        <span class="section-num">10</span>
+        <h2 id="s10-h"><span data-th>ใช้ Codex เป็นทีมเอเจนต์</span><span data-en>Running Codex as an Agent Team</span></h2>
+        <span class="tip-tag"><span data-th>ระดับมืออาชีพ</span><span data-en>Professional</span></span>
+      </div>
+      <p>
+        <span data-th>ถ้าใช้คล่องแล้วและอยากขยับจาก "ผู้ช่วยคนเดียว" เป็น "หัวหน้าทีม" ที่สั่งงาน agent หลายตัวพร้อมกัน แต่ละตัวถนัดคนละด้าน — นี่คือแนวคิดหลักที่ทำให้ทำงานแบบนั้นได้จริงโดยไม่พังกลางทาง</span>
+        <span data-en>Once you're comfortable, and want to move from "a single assistant" to "a team lead" directing several agents at once, each specialized in a different area — these are the core concepts that make that actually work without falling apart.</span>
+      </p>
+
+      <ol class="steps" style="margin-top:20px;">
+        <li class="step">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <div class="step-title"><span data-th>แบ่งบทบาทเฉพาะทาง</span><span data-en>Give each agent a specialized role</span></div>
+            <p class="step-text">
+              <span data-th>แทนที่จะสั่งงานเดียวให้ Codex ทำทุกอย่าง แบ่งเป็นบทบาท เช่น "ตัวค้นข้อมูล" "ตัวเขียนร่าง" "ตัวตรวจทาน" — คุณเป็นหัวหน้าที่มอบงานและอนุมัติผลลัพธ์ ไม่ใช่ลงมือทำเอง หรือปล่อยตัวเดียวทำทุกขั้นตอน</span>
+              <span data-en>Instead of one instruction asking Codex to do everything, split the work into roles — a "researcher," a "drafter," a "reviewer." You're the lead who assigns work and approves the result, not the one doing every step or the one letting a single agent handle it all.</span>
+            </p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <div class="step-title"><span data-th>ต่อกันเป็นสายงาน (pipeline)</span><span data-en>Chain them into a pipeline</span></div>
+            <p class="step-text">
+              <span data-th>ผลลัพธ์ของ agent ตัวหนึ่งส่งต่อเป็นข้อมูลตั้งต้นให้อีกตัว (ค้นข้อมูล → เขียนร่าง → ตรวจทาน → สรุปส่ง) จุดสำคัญ: ทุกจุดต่อคือที่ที่คุณเข้าไปดูได้ก่อนส่งต่อ — ไม่ใช่ปล่อยยาวจนจบโดยไม่มีใครดูระหว่างทาง</span>
+              <span data-en>One agent's output becomes the next one's starting point (research → draft → review → finalize). The key: every handoff is a place you can check before it moves on — not one long chain nobody looks at until the end.</span>
+            </p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <div class="step-title"><span data-th>ปล่อยให้ลองซ้ำได้ แต่ต้องมีเพดาน</span><span data-en>Let it retry, but always cap it</span></div>
+            <p class="step-text">
+              <span data-th>ปล่อยให้ agent แก้งานซ้ำเองได้ (เช่น "แก้จนกว่าจะผ่านเงื่อนไข") แต่ต้องมี "เพดาน" เสมอ — จำกัดจำนวนรอบ และมีจุดที่ต้องกลับมาถามคุณ ห้ามปล่อยเป็นลูปไม่มีที่สิ้นสุด เพราะพลาดแล้วจะพลาดซ้ำเร็วและเสียค่าใช้จ่ายบานปลาย</span>
+              <span data-en>Let an agent retry/improve on its own (e.g. "keep fixing until this condition passes") — but always set a cap: a maximum number of rounds, plus a point where it must come back and ask. Never an unbounded loop — a mistake compounds fast and costs run away.</span>
+            </p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">04</div>
+          <div class="step-body">
+            <div class="step-title"><span data-th>จบเซสชันด้วยการสรุป (wrap)</span><span data-en>Close each session with a wrap-up</span></div>
+            <p class="step-text">
+              <span data-th>ก่อนปิดงานแต่ละครั้ง ให้สรุป: เปลี่ยนอะไรไปบ้าง เหลืออะไรค้าง แล้วบันทึกลง MEMORY.md — พิธีกรรมเล็กๆ นี้ทำให้ครั้งหน้า (หรือทีมคนอื่น/agent ตัวอื่น) หยิบงานต่อได้ทันทีโดยไม่ต้องไล่อ่านใหม่ทั้งหมด</span>
+              <span data-en>Before closing each session, summarize: what changed, what's still open, and save it to MEMORY.md. This small ritual means next time — or a different teammate or agent — can pick the work straight back up, without re-reading everything from scratch.</span>
+            </p>
+          </div>
+        </li>
+      </ol>
+
+      <p class="section-intro" style="margin-top:28px;">
+        <span data-th><strong>เริ่มจากไฟล์ 4 อันนี้</strong> — ถ้าจะลองทำระบบทีมเอเจนต์ของตัวเอง</span>
+        <span data-en><strong>Start with these 4 files</strong> — if you want to build your own agent-team system</span>
+      </p>
+      <ul class="checklist">
+        <li>
+          <span class="check-mark" aria-hidden="true">&#10003;</span>
+          <p><span data-th><strong>ไฟล์กติกาโปรเจกต์</strong> — บริบท/กติกาที่ต้องรู้ก่อนเริ่มงานทุกครั้ง (เหมือน CLAUDE.md/AGENTS.md)</span><span data-en><strong>A project-rules file</strong> — the context/rules every agent should read before starting (like a CLAUDE.md/AGENTS.md)</span></p>
+        </li>
+        <li>
+          <span class="check-mark" aria-hidden="true">&#10003;</span>
+          <p><span data-th><strong>MEMORY.md</strong> — บันทึกความจำที่อัปเดตทุกจบเซสชัน</span><span data-en><strong>MEMORY.md</strong> — running notes updated at the end of every session</span></p>
+        </li>
+        <li>
+          <span class="check-mark" aria-hidden="true">&#10003;</span>
+          <p><span data-th><strong>ไฟล์ SKILL</strong> — ขั้นตอนสำหรับงานที่ทำซ้ำ อย่างละไฟล์</span><span data-en><strong>SKILL files</strong> — one file per repeatable procedure</span></p>
+        </li>
+        <li>
+          <span class="check-mark" aria-hidden="true">&#10003;</span>
+          <p><span data-th><strong>PLAN.md</strong> — ล็อกขอบเขตงานก่อนปล่อยให้ agent ลงมือทำงานใหญ่/เสี่ยง</span><span data-en><strong>PLAN.md</strong> — locks the scope before letting an agent execute anything big or risky</span></p>
+        </li>
+      </ul>
     </section>
 
     <footer>
