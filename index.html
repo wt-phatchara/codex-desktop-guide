@@ -940,6 +940,59 @@
       </ul>
     </section>
 
+    <section aria-labelledby="s11-h">
+      <div class="section-head">
+        <span class="section-num">11</span>
+        <h2 id="s11-h"><span data-th>ตัวอย่างจริงจากระบบของเรา</span><span data-en>A Real Example From Our Own Setup</span></h2>
+        <span class="tip-tag"><span data-th>ระดับมืออาชีพ</span><span data-en>Professional</span></span>
+      </div>
+      <p class="section-intro">
+        <span data-th>แนวคิดด้านบนไม่ใช่ทฤษฎีลอยๆ — นี่คือตัวอย่างจริงจากระบบหลายโปรเจกต์ที่ใช้แนวคิดเดียวกันนี้ทำงานอยู่ทุกวัน (ตัดข้อมูลส่วนตัว/ความลับออกหมดแล้ว เหลือแค่แพทเทิร์นที่เอาไปใช้ต่อได้)</span>
+        <span data-en>The concepts above aren't just theory — here's a real example from a multi-project setup running on these same ideas every day (private/sensitive details removed, only the reusable pattern shown).</span>
+      </p>
+      <div class="capability-grid">
+        <div class="capability-card">
+          <div class="capability-head">
+            <span class="capability-icon" aria-hidden="true">&#127959;&#65039;</span>
+            <span class="capability-title"><span data-th>สถาปัตยกรรม 4 ชั้น</span><span data-en>4-layer architecture</span></span>
+          </div>
+          <p class="capability-blurb"><span data-th>แยกเป็นชั้น: กติกากลาง (rules) → ชั้นจัดสรร/เลือกโมเดล → เครื่องมือหลักที่ทำงานตลอด 24 ชม. → โปรเจกต์เฉพาะทางแต่ละอัน ทุกโปรเจกต์มีไฟล์ชุดเดียวกันเสมอ (กติกา/ความจำ/แผนงาน/สถาปัตยกรรม) — เปิดโปรเจกต์ไหนก็รู้บริบททันที ไม่ต้องอธิบายใหม่</span><span data-en>Split into layers: global rules → a routing/model-selection layer → a main engine running 24/7 → each specialized project. Every project keeps the same file set (rules/memory/plan/architecture) — open any of them and the context is already there, no re-explaining.</span></p>
+        </div>
+
+        <div class="capability-card">
+          <div class="capability-head">
+            <span class="capability-icon" aria-hidden="true">&#128218;</span>
+            <span class="capability-title"><span data-th>คลังทักษะเป็นร้อยไฟล์</span><span data-en>A skills library with hundreds of entries</span></span>
+          </div>
+          <p class="capability-blurb"><span data-th>ทุกครั้งที่เจอปัญหาซ้ำ (บั๊กแปลกๆ ข้อผิดพลาดที่พลาดบ่อย) เขียนเป็นไฟล์บันทึกสั้นๆ แยกไว้ต่างหาก ตอนนี้มีเป็นร้อยไฟล์ ครอบคลุมตั้งแต่ git ไปจนถึงฮาร์ดแวร์ — เจอปัญหาเดิมครั้งหน้า agent เจอทางแก้ทันที ไม่ต้องเริ่มนับหนึ่งใหม่</span><span data-en>Every time the same kind of problem shows up (a weird bug, a recurring mistake), it gets written down as its own short file. There are now hundreds of them, covering everything from git quirks to hardware debugging — hit the same problem again, and the agent already has the fix instead of rediscovering it from scratch.</span></p>
+        </div>
+
+        <div class="capability-card">
+          <div class="capability-head">
+            <span class="capability-icon" aria-hidden="true">&#128257;</span>
+            <span class="capability-title"><span data-th>พิธีกรรมจบเซสชัน</span><span data-en>An end-of-session ritual</span></span>
+          </div>
+          <p class="capability-blurb"><span data-th>ทุกจบงาน บันทึก 3 อย่างลงไฟล์ความจำ: ทำอะไรไป (Actor) ประเมินว่าเวิร์กแค่ไหน (Evaluator) เสนอว่าครั้งหน้าควรปรับอะไร (Reflector) — ทำให้ระบบ "ฉลาดขึ้น" ทีละนิด แทนที่จะพลาดซ้ำเดิมทุกครั้ง</span><span data-en>At the end of every session, three things get logged to the memory file: what was done (Actor), how well it worked (Evaluator), what to adjust next time (Reflector) — so the system gets a little smarter each round instead of repeating the same mistake.</span></p>
+        </div>
+
+        <div class="capability-card">
+          <div class="capability-head">
+            <span class="capability-icon" aria-hidden="true">&#128678;</span>
+            <span class="capability-title"><span data-th>ด่านตรวจก่อนงานเสี่ยง</span><span data-en>A gate before anything risky</span></span>
+          </div>
+          <p class="capability-blurb"><span data-th>ก่อนสั่งงานที่ย้อนกลับยาก (ลบของ จ่ายเงิน ดันโค้ดขึ้นจริง) ต้องผ่าน 2 ชั้นเสมอ: ให้ AI อีกตัวตรวจทานแบบอิสระ + คนต้องพิมพ์คำอนุมัติชัดเจนก่อน ไม่ใช่แค่คลิกผ่านเฉยๆ</span><span data-en>Before anything hard to undo (deleting something, spending money, pushing to production), it always goes through 2 checks: an independent AI review, plus a human typing an explicit approval — not just a click-through.</span></p>
+        </div>
+
+        <div class="capability-card">
+          <div class="capability-head">
+            <span class="capability-icon" aria-hidden="true">&#127919;</span>
+            <span class="capability-title"><span data-th>เลือกโมเดลตามความเสี่ยง ไม่ใช่ตามขนาดงาน</span><span data-en>Route the model by risk, not task size</span></span>
+          </div>
+          <p class="capability-blurb"><span data-th>งานจิ๊บจ๊อย (จัดไฟล์ ฟอร์แมต) ใช้โมเดลถูก/เร็ว งานทั่วไปใช้โมเดลระดับกลาง ส่วนงานที่พลาดแล้วเสียหายจริง (การเงิน ความปลอดภัย สถาปัตยกรรม) เก็บโมเดลที่แม่นที่สุดไว้ใช้เฉพาะจุดนั้น — ประหยัดได้เยอะโดยจุดสำคัญไม่ลดคุณภาพ</span><span data-en>Trivial work (file cleanup, formatting) gets the cheap/fast model. Regular work gets a mid-tier model. Work where a mistake actually costs something (finance, security, architecture) is reserved for the most careful model — saves a lot without lowering quality where it matters.</span></p>
+        </div>
+      </div>
+    </section>
+
     <footer>
       <p>
         <span data-th>คู่มือนี้จัดทำอย่างไม่เป็นทางการ อ้างอิงจากหน้าเว็บทางการของ OpenAI / ChatGPT ณ กันยายน 2026 หน้าตาแอปอาจเปลี่ยนไปหลังจากนี้ ตรวจสอบข้อมูลล่าสุดได้ที่ <a href="https://chatgpt.com/download" target="_blank" rel="noopener">chatgpt.com/download</a></span>
