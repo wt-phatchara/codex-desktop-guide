@@ -73,15 +73,12 @@
   @media (max-width:560px){ .wrap{ padding:0 16px 72px; } }
 
   /* --- language toggle plumbing --- */
-  [data-th]{ display:block; }
+  /* every [data-th]/[data-en] pair is a <span>, so no display override is
+     needed beyond show/hide: specificity must stay attribute-only or the
+     hide rule loses to any tag-qualified selector added later. */
   [data-en]{ display:none; }
   body.lang-en [data-th]{ display:none; }
-  body.lang-en [data-en]{ display:block; }
-  [data-th].inline, [data-en].inline{ display:inline; }
-  body.lang-en [data-en].inline{ display:inline; }
-  span[data-th], span[data-en]{ display:inline; }
-  body.lang-en span[data-th]{ display:none; }
-  body.lang-en span[data-en]{ display:inline; }
+  body.lang-en [data-en]{ display:inline; }
 
   /* --- top bar --- */
   .topbar{
