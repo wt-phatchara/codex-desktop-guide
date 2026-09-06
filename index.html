@@ -272,6 +272,21 @@
   .tradeoff-col.pros li::before{ content:"+"; position:absolute; left:0; color:var(--accent-2); font-weight:700; font-family:'IBM Plex Mono',monospace; }
   .tradeoff-col.cons li::before{ content:"\2013"; position:absolute; left:0; color:var(--accent); font-weight:700; font-family:'IBM Plex Mono',monospace; }
 
+  /* --- video + downloads --- */
+  .video-wrap{
+    margin-top:20px; border-radius:14px; overflow:hidden; border:1px solid var(--line);
+    box-shadow:var(--shadow); background:#000; line-height:0;
+  }
+  .video-wrap video{ display:block; width:100%; height:auto; }
+  .downloads{ margin-top:16px; display:flex; flex-wrap:wrap; gap:12px; }
+  .download-btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:600;
+    color:var(--paper-2); background:var(--accent-2); border-radius:999px;
+    padding:10px 18px; text-decoration:none; box-shadow:var(--shadow);
+  }
+  .download-btn:hover{ background:var(--accent); }
+
   /* --- caution box --- */
   .caution{
     background:var(--warn-bg); border:1px solid var(--warn-line); border-radius:14px;
@@ -990,6 +1005,30 @@
           </div>
           <p class="capability-blurb"><span data-th>งานจิ๊บจ๊อย (จัดไฟล์ ฟอร์แมต) ใช้โมเดลถูก/เร็ว งานทั่วไปใช้โมเดลระดับกลาง ส่วนงานที่พลาดแล้วเสียหายจริง (การเงิน ความปลอดภัย สถาปัตยกรรม) เก็บโมเดลที่แม่นที่สุดไว้ใช้เฉพาะจุดนั้น — ประหยัดได้เยอะโดยจุดสำคัญไม่ลดคุณภาพ</span><span data-en>Trivial work (file cleanup, formatting) gets the cheap/fast model. Regular work gets a mid-tier model. Work where a mistake actually costs something (finance, security, architecture) is reserved for the most careful model — saves a lot without lowering quality where it matters.</span></p>
         </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="s12-h">
+      <div class="section-head">
+        <span class="section-num">12</span>
+        <h2 id="s12-h"><span data-th>ดูวิดีโอ &amp; โหลดสไลด์</span><span data-en>Watch the Video &amp; Download the Deck</span></h2>
+      </div>
+      <p class="section-intro">
+        <span data-th>สรุปเนื้อหาทั้ง 3 ระดับเป็นวิดีโอสั้น 1 นาที (เสียงอังกฤษ + ซับไทย) และสไลด์ 15 หน้าไว้เปิดสอนทีมสด</span>
+        <span data-en>The same 3 levels as a 1-minute video (English narration, Thai subtitles) and a 15-slide deck for presenting live to your team.</span>
+      </p>
+      <div class="video-wrap">
+        <video controls preload="metadata" playsinline>
+          <source src="assets/codex-team-video.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="downloads">
+        <a class="download-btn" href="assets/codex-team-video.mp4" download>
+          <span data-th>ดาวน์โหลดวิดีโอ (.mp4, 6.8MB)</span><span data-en>Download video (.mp4, 6.8MB)</span>
+        </a>
+        <a class="download-btn" href="assets/codex-team-deck.pptx" download>
+          <span data-th>ดาวน์โหลดสไลด์ (.pptx, 357KB)</span><span data-en>Download slides (.pptx, 357KB)</span>
+        </a>
       </div>
     </section>
 
